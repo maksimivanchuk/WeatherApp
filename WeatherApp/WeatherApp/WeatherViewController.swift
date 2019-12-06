@@ -109,13 +109,23 @@ class WheatherViewController: UIViewController {
     }()
     
     let shareButton:UIButton = {
-        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 200, height: 50))
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 350, height: 100))
         button.setTitleColor(.systemBlue, for: .normal)
-        button.setTitle("Share", for: .normal)
+        button.setTitle(" Share ", for: .normal)
         button.titleLabel?.font = UIFont(name:"", size: 28)
-        //button.addTarget(self, action: #selector(self.buttonAction(_)), for: .touchUpInside)
+        button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+        button.tag = 1
+      
+        button.layer.borderWidth = 2.0
+        button.layer.borderColor = (UIColor.systemBlue).cgColor
+        button.clipsToBounds = true
+        
         return button
     }()
+        
+    
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -140,12 +150,12 @@ class WheatherViewController: UIViewController {
         
         imageView.snp.makeConstraints { (make) in
             make.width.height.equalTo(100)
-            make.top.equalTo(self.view).offset(100)
-            make.centerX.equalTo(self.view)
+            make.top.equalToSuperview().offset(100)
+            make.centerX.equalToSuperview()
         }
         cityLabel.snp.makeConstraints { (make) in
             make.top.equalTo(imageView.snp.bottom).offset(10)
-            make.centerX.equalTo(self.view)
+            make.centerX.equalToSuperview()
         }
         stateLabel.snp.makeConstraints { (make) in
             make.top.equalTo(cityLabel.snp.bottom).offset(15)
@@ -158,11 +168,11 @@ class WheatherViewController: UIViewController {
         humidityView.snp.makeConstraints { (make) in
             make.top.equalTo(temperatureLabel.snp.bottom).offset(35)
             make.right.equalTo(self.view.snp.centerX)
-            make.left.equalTo(self.view.snp_leftMargin)
+            make.left.equalToSuperview()
         }
        pressureView.snp.makeConstraints { (make) in
             make.top.equalTo(temperatureLabel.snp.bottom).offset(35)
-            make.right.equalTo(self.view.snp_rightMargin)
+            make.right.equalToSuperview()
             make.left.equalTo(self.view.snp.centerX)
         }
        humidityLabel.snp.makeConstraints { (make) in
@@ -177,11 +187,11 @@ class WheatherViewController: UIViewController {
         speedView.snp.makeConstraints { (make) in
             make.top.equalTo(humidityLabel.snp.bottom).offset(35)
             make.right.equalTo(self.view.snp.centerX)
-            make.left.equalTo(self.view.snp_leftMargin)
+            make.left.equalToSuperview()
         }
         directionView.snp.makeConstraints { (make) in
             make.top.equalTo(pressureLabel.snp.bottom).offset(35)
-            make.right.equalTo(self.view.snp_rightMargin)
+            make.right.equalToSuperview()
             make.left.equalTo(self.view.snp.centerX)
          }
         speedLabel.snp.makeConstraints { (make) in
@@ -193,10 +203,18 @@ class WheatherViewController: UIViewController {
              make.centerX.equalTo(directionView.snp.centerX)
          }
         shareButton.snp.makeConstraints { (make) in
-            make.bottom.equalTo(self.view.snp.bottom).inset(100)
-            make.centerX.equalTo(self.view.snp.centerX)
+            make.bottom.equalToSuperview().inset(100)
+            make.centerX.equalToSuperview()
         }
     }
+    @objc func buttonAction(sender: UIButton!) {
+        let btnsendtag: UIButton = sender
+        if btnsendtag.tag == 1 {
+            dismiss(animated: true, completion: nil)
+            print("Button Clicked")
+        }
+    }
+    
 }
 
 
@@ -226,3 +244,6 @@ class WheatherViewController: UIViewController {
     return newImage!
 }
 
+func action(sender:UIButton!) {
+   print("Button Clicked")
+}
