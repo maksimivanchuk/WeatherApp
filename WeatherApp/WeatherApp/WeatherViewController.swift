@@ -2,9 +2,6 @@
 import UIKit
 import SnapKit
 class WheatherViewController: UIViewController {
-    @objc func buttonClicked() {
-        print("Button Clicked")
-    }
     
     let imageView: UIImageView = {
         let image: UIImage = UIImage(named: "clouds.png")!
@@ -22,22 +19,31 @@ class WheatherViewController: UIViewController {
         return name
     }()
     
+    let someLabel: UILabel = {
+        let name = UILabel()
+        name.textAlignment = NSTextAlignment.center
+        name.font = UIFont(name: name.font.fontName, size: 22)
+        return name
+    }()
+    
     let temperatureLabel: UILabel = {
-           let name = UILabel()
-           name.text = "Temperature "
-         name.textColor = UIColor(cgColor: CGColor(srgbRed: 14.0/255, green: 122.0/255, blue: 254.0/255 , alpha: 1))
-           name.textAlignment = NSTextAlignment.center
-           name.font = UIFont(name: name.font.fontName, size: 26)
-           return name
+        let name = UILabel()
+        name.text = "Temperature "
+        name.textColor = .systemBlue
+        name.textAlignment = NSTextAlignment.center
+        name.font = UIFont(name: name.font.fontName, size: 26)
+        return name
        }()
+    
     let stateLabel: UILabel = {
-              let name = UILabel()
-              name.text = "| State"
-              name.textColor = UIColor(cgColor: CGColor(srgbRed: 14.0/255, green: 122.0/255, blue: 254.0/255 , alpha: 1))
-              name.textAlignment = NSTextAlignment.center
-              name.font = UIFont(name: name.font.fontName, size: 26)
-              return name
+        let name = UILabel()
+        name.text = "| State"
+        name.textColor = .systemBlue
+        name.textAlignment = NSTextAlignment.center
+        name.font = UIFont(name: name.font.fontName, size: 26)
+        return name
           }()
+    
     let humidityView: UIImageView = {
       let image: UIImage = resizeImage(image: UIImage(named: "humidity.png")!,targetSize: CGSize(width: 50.0, height: 50.0))
         let imageView = UIImageView(image: image)
@@ -45,6 +51,7 @@ class WheatherViewController: UIViewController {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
+    
     let humidityLabel: UILabel = {
         let name = UILabel()
         name.text = "humidity"
@@ -52,6 +59,7 @@ class WheatherViewController: UIViewController {
         name.font = UIFont(name: name.font.fontName, size: 22)
         return name
     }()
+    
     let pressureView: UIImageView = {
          let image: UIImage = resizeImage(image: UIImage(named: "pressure.png")!,targetSize: CGSize(width: 50.0, height: 50.0))
         let imageView = UIImageView(image: image)
@@ -59,6 +67,7 @@ class WheatherViewController: UIViewController {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
+    
     let pressureLabel: UILabel = {
            let name = UILabel()
            name.text = "pressure"
@@ -66,6 +75,7 @@ class WheatherViewController: UIViewController {
            name.font = UIFont(name: name.font.fontName, size: 22)
            return name
        }()
+    
     let speedView: UIImageView = {
         let image: UIImage = resizeImage(image: UIImage(named: "wind.png")!,targetSize: CGSize(width: 50.0, height: 50.0))
         let imageView = UIImageView(image: image)
@@ -73,6 +83,7 @@ class WheatherViewController: UIViewController {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
+    
     let speedLabel: UILabel = {
         let name = UILabel()
         name.text = "speed"
@@ -80,6 +91,7 @@ class WheatherViewController: UIViewController {
         name.font = UIFont(name: name.font.fontName, size: 22)
         return name
     }()
+    
     let directionView: UIImageView = {
         let image: UIImage = resizeImage(image: UIImage(named: "compass.png")!,targetSize: CGSize(width: 50.0, height: 50.0))
         let imageView = UIImageView(image: image)
@@ -87,6 +99,7 @@ class WheatherViewController: UIViewController {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
+    
     let directionLabel: UILabel = {
         let name = UILabel()
         name.text = "direction"
@@ -94,16 +107,16 @@ class WheatherViewController: UIViewController {
         name.font = UIFont(name: name.font.fontName, size: 22)
         return name
     }()
+    
     let shareButton:UIButton = {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 200, height: 50))
-        button.backgroundColor = .blue
+        button.setTitleColor(.systemBlue, for: .normal)
         button.setTitle("Share", for: .normal)
+        button.titleLabel?.font = UIFont(name:"", size: 28)
         //button.addTarget(self, action: #selector(self.buttonAction(_)), for: .touchUpInside)
         return button
     }()
     
-    let buttonWidth:CGFloat = 150
-    let buttonHeight:CGFloat = 45
     override func viewDidLoad() {
         super.viewDidLoad()
        
@@ -127,63 +140,61 @@ class WheatherViewController: UIViewController {
         
         imageView.snp.makeConstraints { (make) in
             make.width.height.equalTo(100)
-            make.top.equalTo(self.view.snp_topMargin).offset(50)
-            make.centerX.equalTo(self.view.snp_centerXWithinMargins)
+            make.top.equalTo(self.view).offset(100)
+            make.centerX.equalTo(self.view)
         }
         cityLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(imageView.snp_bottomMargin).offset(20)
-            make.centerX.equalTo(self.view.snp_centerXWithinMargins)
+            make.top.equalTo(imageView.snp.bottom).offset(10)
+            make.centerX.equalTo(self.view)
         }
         stateLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(cityLabel.snp_bottomMargin).offset(20)
-            make.left.equalTo(self.view.snp_centerXWithinMargins)
+            make.top.equalTo(cityLabel.snp.bottom).offset(15)
+            make.left.equalTo(self.view.snp.centerX)
         }
         temperatureLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(cityLabel.snp_bottomMargin).offset(20)
-            make.right.equalTo(self.view.snp_centerXWithinMargins)
-           
+            make.top.equalTo(cityLabel.snp.bottom).offset(15)
+            make.right.equalTo(self.view.snp.centerX)
         }
         humidityView.snp.makeConstraints { (make) in
-            make.top.equalTo(temperatureLabel.snp_bottomMargin).offset(70)
-            make.right.equalTo(self.view.snp_centerXWithinMargins)
+            make.top.equalTo(temperatureLabel.snp.bottom).offset(35)
+            make.right.equalTo(self.view.snp.centerX)
             make.left.equalTo(self.view.snp_leftMargin)
         }
        pressureView.snp.makeConstraints { (make) in
-            make.top.equalTo(temperatureLabel.snp_bottomMargin).offset(70)
+            make.top.equalTo(temperatureLabel.snp.bottom).offset(35)
             make.right.equalTo(self.view.snp_rightMargin)
-            make.left.equalTo(self.view.snp_centerXWithinMargins)
+            make.left.equalTo(self.view.snp.centerX)
         }
        humidityLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(humidityView.snp_bottomMargin).offset(5)
-            make.centerX.equalTo(humidityView.snp_centerXWithinMargins)
+            make.top.equalTo(humidityView.snp.bottom).offset(5)
+            make.centerX.equalTo(humidityView.snp.centerX)
         }
         pressureLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(pressureView.snp_bottomMargin).offset(5)
-            make.centerX.equalTo(pressureView.snp_centerXWithinMargins)
+            make.top.equalTo(pressureView.snp.bottom).offset(5)
+            make.centerX.equalTo(pressureView.snp.centerX)
         }
         
         speedView.snp.makeConstraints { (make) in
-                    make.top.equalTo(humidityLabel.snp_bottomMargin).offset(70)
-                    make.right.equalTo(self.view.snp_centerXWithinMargins)
-                    make.left.equalTo(self.view.snp_leftMargin)
-                }
+            make.top.equalTo(humidityLabel.snp.bottom).offset(35)
+            make.right.equalTo(self.view.snp.centerX)
+            make.left.equalTo(self.view.snp_leftMargin)
+        }
         directionView.snp.makeConstraints { (make) in
-             make.top.equalTo(pressureLabel.snp_bottomMargin).offset(70)
-             make.right.equalTo(self.view.snp_rightMargin)
-             make.left.equalTo(self.view.snp_centerXWithinMargins)
+            make.top.equalTo(pressureLabel.snp.bottom).offset(35)
+            make.right.equalTo(self.view.snp_rightMargin)
+            make.left.equalTo(self.view.snp.centerX)
          }
         speedLabel.snp.makeConstraints { (make) in
-             make.top.equalTo(speedView.snp_bottomMargin).offset(5)
-             make.centerX.equalTo(speedView.snp_centerXWithinMargins)
+             make.top.equalTo(speedView.snp.bottom).offset(5)
+             make.centerX.equalTo(speedView.snp.centerX)
          }
          directionLabel.snp.makeConstraints { (make) in
-             make.top.equalTo(directionView.snp_bottomMargin).offset(5)
-             make.centerX.equalTo(directionView.snp_centerXWithinMargins)
+             make.top.equalTo(directionView.snp.bottom).offset(5)
+             make.centerX.equalTo(directionView.snp.centerX)
          }
         shareButton.snp.makeConstraints { (make) in
-            make.bottom.equalTo(self.view.snp_bottomMargin).offset(20)
-            make.top.equalTo(directionLabel.snp_bottomMargin).offset(20)
-            make.centerX.equalTo(self.view.snp_centerXWithinMargins)
+            make.bottom.equalTo(self.view.snp.bottom).inset(100)
+            make.centerX.equalTo(self.view.snp.centerX)
         }
     }
 }
