@@ -6,26 +6,13 @@ import UserNotifications
 
 class MainTabBarController: UITabBarController{
 
-     let lm = CLLocationManager()
      let center = UNUserNotificationCenter.current()
      private let listViewModel = ListViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-       listViewModel.loadData()
-             
-            
-        print(listViewModel.listModel.items[0].descriptionField + " !!!!! ")
+        //print(listViewModel.listModel.items[1].descriptionField + " !!!!! ")
         //lm.requestAlwaysAuthorization()
-        lm.requestWhenInUseAuthorization()
-       
-        lm.delegate = self
-        lm.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-        lm.startUpdatingLocation()
-       
-        center.requestAuthorization(options: [.alert, .sound]) { granted, error in
-        }
         setupTabBar()
     }
     
@@ -46,17 +33,4 @@ class MainTabBarController: UITabBarController{
     }
 }
 
-extension MainTabBarController: CLLocationManagerDelegate {
 
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
-        print("locations = \(locValue.latitude) \(locValue.longitude)")
-    }
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-       if status == .authorizedAlways || status == .authorizedWhenInUse {
-         lm.startUpdatingLocation()
-       } else {
-         lm.stopUpdatingLocation()
-       }
-     }
-}

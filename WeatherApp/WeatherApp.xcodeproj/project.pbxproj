@@ -19,7 +19,6 @@
 		446DB13B23986D3F00DEDA99 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446DB13A23986D3F00DEDA99 /* ListViewController.swift */; };
 		449245CC239C28BF00DD86D2 /* NetworkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449245CB239C28BF00DD86D2 /* NetworkModel.swift */; };
 		449245CE239C768900DD86D2 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449245CD239C768900DD86D2 /* Model.swift */; };
-		449245D0239C7C7600DD86D2 /* ListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449245CF239C7C7600DD86D2 /* ListModel.swift */; };
 		449245D2239C81F500DD86D2 /* ListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449245D1239C81F500DD86D2 /* ListViewModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -39,7 +38,6 @@
 		446DB13A23986D3F00DEDA99 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		449245CB239C28BF00DD86D2 /* NetworkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkModel.swift; sourceTree = "<group>"; };
 		449245CD239C768900DD86D2 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
-		449245CF239C7C7600DD86D2 /* ListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListModel.swift; sourceTree = "<group>"; };
 		449245D1239C81F500DD86D2 /* ListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewModel.swift; sourceTree = "<group>"; };
 		52430D0C403B561B4272103A /* Pods-WeatherApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeatherApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-WeatherApp/Pods-WeatherApp.release.xcconfig"; sourceTree = "<group>"; };
 		AA69751A0FD9DA8FEBD92A55 /* libPods-WeatherApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WeatherApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -85,7 +83,6 @@
 				446DB13823986CEF00DEDA99 /* WeatherViewController.swift */,
 				446DB13A23986D3F00DEDA99 /* ListViewController.swift */,
 				449245D1239C81F500DD86D2 /* ListViewModel.swift */,
-				449245CF239C7C7600DD86D2 /* ListModel.swift */,
 				449245CD239C768900DD86D2 /* Model.swift */,
 				446DB12823986BD400DEDA99 /* Assets.xcassets */,
 				446DB13023986BD400DEDA99 /* Info.plist */,
@@ -248,7 +245,6 @@
 				449245D2239C81F500DD86D2 /* ListViewModel.swift in Sources */,
 				446DB13B23986D3F00DEDA99 /* ListViewController.swift in Sources */,
 				446DB13923986CEF00DEDA99 /* WeatherViewController.swift in Sources */,
-				449245D0239C7C7600DD86D2 /* ListModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,26 +8,27 @@
 
 import Foundation
 final class ListViewModel {
-    let listModel = ListModel()
-   
-    func updateData(nm: NetworkModel) {
-
-        for i  in 0...((nm.list.count)-1)
-        {
-            listModel.items.append(Model(humidity: nm.list[i].main.humidity, pressure: nm.list[i].main.pressure, temp: nm.list[i].main.temp, descriptionField: nm.list[i].weather.description, speed: nm.list[i].wind.speed, deg: nm.list[i].wind.deg))
-        }
-        listModel.city = nm.city
+    var items: [Model] = {
+        let item = Model(humidity: 0, pressure: 0.0, temp: 0.0, descriptionField: "", speed: 0.0, deg: 0.0)
+        return [item]
         
-        /*DispatchQueue.main.async {
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Update"), object: nil)
-        }*/
-    }
+    }()
+    var city: City = {
+        let city = City(name: "", country: "")
+        return city
+        
+    }()
     
-    func loadData() {
+    func loadData(lat:Double,lng:Double,completion: @escaping () -> Void) {
         let networkManager = NetworkManager()
-        networkManager.getTweetRequest() { (Request) in
-            guard let request = Request else {return}
-            self.updateData(nm:request)
+        networkManager.getData(lat: lat,lng: lng) { networkModel in
+            guard let networkModel = networkModel else {return}
+            self.city = networkModel.city
+            for listItem in networkModel.list{
+                let model = Model(humidity: listItem.main.humidity, pressure: listItem.main.pressure, temp: listItem.main.temp, descriptionField: listItem.weather.description, speed: listItem.wind.speed, deg: listItem.wind.deg)
+                self.items.append(model)
+            }
+            completion()
         }
     }
 }

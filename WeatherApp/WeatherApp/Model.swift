@@ -6,7 +6,7 @@ struct Model {
     var humidity: Int
     var pressure: Double
     var temp: Double
-    var descriptionField: String
+    var state: String
     var speed: Double
     var deg: Double
        
@@ -18,7 +18,7 @@ struct Model {
            self.humidity = humidity
            self.pressure = pressure
            self.temp = temp
-           self.descriptionField = descriptionField
+           self.state = descriptionField
            self.speed = speed
            self.deg = deg
        }
