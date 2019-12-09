@@ -4,8 +4,10 @@ import SnapKit
 import CoreLocation
 class WheatherViewController: UIViewController {
     
-    let lm = CLLocationManager()
+    let localManager = CLLocationManager()
     let listViewModel = ListViewModel()
+    var text = ""
+    
     let imageView: UIImageView = {
         let image: UIImage = UIImage(named: "clouds.png")!
         let imageView = UIImageView(image: image)
@@ -109,8 +111,8 @@ class WheatherViewController: UIViewController {
         button.setTitleColor(.systemBlue, for: .normal)
         button.setTitle(" Share ", for: .normal)
         button.titleLabel?.font = UIFont(name:"", size: 28)
-        button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
-        button.tag = 1
+        button.addTarget(self, action: #selector(buttonAction(sender:)), for: .touchUpInside)
+        
         
         button.layer.borderWidth = 2.0
         button.layer.borderColor = (UIColor.systemBlue).cgColor
@@ -119,20 +121,36 @@ class WheatherViewController: UIViewController {
         return button
     }()
     
+    @objc func buttonAction(sender:UIView) {
+        UIGraphicsBeginImageContext(view.frame.size)
+        view.layer.render(in: UIGraphicsGetCurrentContext()!)
+        UIGraphicsEndImageContext()
+        
+        let objectsToShare = [text] as [Any]
+        let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
+        
+        activityVC.excludedActivityTypes = [UIActivity.ActivityType.airDrop,UIActivity.ActivityType.addToReadingList]
+        
+        activityVC.popoverPresentationController?.sourceView = sender
+        self.present(activityVC, animated: true, completion: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupNavBar()
         setupLocationManager()
         setupView()
     }
     
-    @objc func buttonAction(sender: UIButton!) {
-        let btnsendtag: UIButton = sender
-        if btnsendtag.tag == 1 {
-            dismiss(animated: true, completion: nil)
-            print("Button Clicked")
-        }
+    func setupNavBar(){
+        navigationItem.title = "Today"
     }
-    
+    func setupLocationManager(){
+        localManager.requestWhenInUseAuthorization()
+        localManager.delegate = self
+        localManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+        localManager.startUpdatingLocation()
+    }
     func setupView() {
         view.backgroundColor = .white
         view.addSubview(imageView)
@@ -154,7 +172,7 @@ class WheatherViewController: UIViewController {
         
         imageView.snp.makeConstraints { (make) in
             make.width.height.equalTo(100)
-            make.top.equalToSuperview().offset(100)
+            make.top.equalToSuperview().offset(120)
             make.centerX.equalToSuperview()
         }
         cityLabel.snp.makeConstraints { (make) in
@@ -211,23 +229,25 @@ class WheatherViewController: UIViewController {
             make.centerX.equalToSuperview()
         }
     }
-    func setupLocationManager(){
-        lm.requestWhenInUseAuthorization()
-        lm.delegate = self
-        lm.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-        lm.startUpdatingLocation()
-    }
     func dataLoaded(){
-        cityLabel.text = listViewModel.city.name + listViewModel.city.country
-        stateLabel.text = listViewModel.items[0].state
-        temperatureLabel.text = String(listViewModel.items[0].temp)
-        
+        cityLabel.text = (listViewModel.city.name + "," + listViewModel.city.country)
+        stateLabel.text = "| " + listViewModel.items[0].state
+        temperatureLabel.text = String(Int(listViewModel.items[0].temp )) + "°F "
+        humidityLabel.text = String(Int(listViewModel.items[0].humidity)) + "%"
+        pressureLabel.text = String(Int(listViewModel.items[0].pressure )) + "hPa"
+        speedLabel.text = String(Int(listViewModel.items[0].speed)) + "km/h"
+        directionLabel.text = String(Int(listViewModel.items[0].deg)) + " °"
+        let weatherType:UIImage = Model.Description (rawValue:
+            listViewModel.items[0].state)?.getWeatherImage() ?? UIImage(named:"few_clouds.png")!
+        imageView.image = weatherType
+        text = """
+        The temperature and state in \( cityLabel.text!) now \(temperatureLabel.text!) \( stateLabel.text!). Humidity: \(humidityLabel.text!) Pressure: \( pressureLabel.text!) Wind Speed: \(speedLabel.text!) Direction \(directionLabel.text!)
+        """
     }
-    
 }
 
 extension WheatherViewController: CLLocationManagerDelegate {
-
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
         let lat = Double(locValue.latitude)
@@ -237,12 +257,12 @@ extension WheatherViewController: CLLocationManagerDelegate {
         }
     }
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-       if status == .authorizedAlways || status == .authorizedWhenInUse {
-         lm.startUpdatingLocation()
-       } else {
-         lm.stopUpdatingLocation()
-       }
-     }
+        if status == .authorizedAlways || status == .authorizedWhenInUse {
+            localManager.startUpdatingLocation()
+        } else {
+            localManager.stopUpdatingLocation()
+        }
+    }
 }
 func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
     let size = image.size
@@ -270,6 +290,4 @@ func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
     return newImage!
 }
 
-func action(sender:UIButton!) {
-    print("Button Clicked")
-}
+

@@ -19,24 +19,27 @@ struct NetworkModel: Codable {
 }
 
 struct List: Codable {
-        let main : Main
-        let weather : [Weather]
-        let wind : Wind
-        
+    let main : Main
+    let weather : [Weather]
+    let wind : Wind
+    let data : Int
+    
     private enum CodingKeys: String, CodingKey {
         case main = "main"
         case weather = "weather"
         case wind = "wind"
+        case data = "dt"
     }
     
     init(list: List) {
-           self = list
+        self = list
     }
-       
-    init(main: Main, weather: [Weather],wind:Wind) {
+    
+    init(main: Main, weather: [Weather],wind:Wind,data:Int) {
         self.main = main
         self.weather = weather
         self.wind = wind
+        self.data = data
     }
 }
 
@@ -49,9 +52,9 @@ struct City: Codable {
         case country = "country"
     }
     init(city: City) {
-           self = city
+        self = city
     }
-       
+    
     init(name: String, country: String) {
         self.name = name
         self.country = country
@@ -59,9 +62,9 @@ struct City: Codable {
 }
 
 struct Main : Codable {
-        let humidity : Int
-        let pressure : Double
-        let temp : Double
+    let humidity : Int
+    let pressure : Double
+    let temp : Double
     
     private enum CodingKeys: String, CodingKey {
         case humidity = "humidity"
@@ -70,9 +73,9 @@ struct Main : Codable {
     }
     
     init(main: Main) {
-           self = main
+        self = main
     }
-       
+    
     init(humidity: Int, pressure: Double,temp:Double ) {
         self.humidity = humidity
         self.pressure = pressure
@@ -80,31 +83,31 @@ struct Main : Codable {
     }
 }
 struct Weather : Codable {
-        let descriptionField : String
+    let descriptionField : String
     
     private enum CodingKeys: String, CodingKey {
-           case descriptionField = "description"
-       }
-    init(weather: Weather) {
-           self = weather
+        case descriptionField = "description"
     }
-       
+    init(weather: Weather) {
+        self = weather
+    }
+    
     init(descriptionField: String ) {
         self.descriptionField = descriptionField
     }
 }
 struct Wind : Codable {
-        let deg : Double 
-        let speed : Double
+    let deg : Double 
+    let speed : Double
     
     private enum CodingKeys: String, CodingKey {
         case speed = "speed"
         case deg = "deg"
     }
     init(wind: Wind) {
-           self = wind
+        self = wind
     }
-       
+    
     init(deg: Double, speed: Double ) {
         self.deg = deg
         self.speed = speed
